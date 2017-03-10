@@ -1,7 +1,7 @@
 module P13 (
   p13 ) where
 
-import System.IO ( hGetContents, openFile, IOMode ( ReadMode ), hClose )
+import System.IO ( hGetContents, openFile, IOMode ( ReadMode ) )
 import System.IO.Unsafe ( unsafePerformIO )
 
 getNums :: IO [String]

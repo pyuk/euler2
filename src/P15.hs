@@ -1,19 +1,16 @@
-module P15 where
+module P15 (
+  p15 ) where
 
---import Data.Word
-import Data.List ( intersperse, sort )
+longList :: [[Int]]
+longList = [
+  [a,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16,a17,a18,a19,a20] |
+  a <- [0,1], a2 <- [0,1], a3 <- [0,1], a4 <- [0,1], a5 <- [0,1], a6 <- [0,1],
+  a17 <- [0,1], a7 <- [0,1], a8 <- [0,1], a9 <- [0,1], a10 <- [0,1],
+  a11 <- [0,1], a18 <- [0,1], a12 <- [0,1], a13 <- [0,1], a14 <- [0,1],
+  a15 <- [0,1], a16 <- [0,1], a19 <- [0,1], a20 <- [0,1]]
 
-takeSomething :: Int -> Int -> [Int]
-takeSomething x y = take x (repeat y)
+longList' :: [[Int]]
+longList' = [[a,b,c,d] | a <- [0,1], b <- [0,1], c <- [0,1], d <- [0,1]]
 
-addZeroOrOne :: Bool -> Int
-addZeroOrOne x | x = 0
-               | otherwise = 1
-
-condense :: [[a]] -> [a]
-condense [] = []
-condense (xs:xss) = xs ++ condense xss
-
-mappingSomething :: Int -> [[Int]]
-mappingSomething 2 = concat $ map (\a -> map (:a:[]) (take 2 . intersperse 1 . repeat $ 0)) (take 2 $ intersperse 1 $ repeat 0)
-mappingSomething x = concat $ map (\a -> map (:a) (take x . intersperse 1 . repeat $ 0)) $ mappingSomething (x - 1)
+p15 :: Int
+p15 = length $ filter ((==10) . sum) longList
