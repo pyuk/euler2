@@ -6,6 +6,7 @@ import P14
 import P15
 import P16
 import P17
+import P19
 
 listAnswers :: Integer -> String
 listAnswers x
@@ -15,4 +16,5 @@ listAnswers x
   | x == 15 = show $ p15
   | x == 16 = show $ p16
   | x == 17 = show $ p17
+  | x == 19 = show $ p19
   | otherwise = "not available"
