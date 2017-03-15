@@ -24,7 +24,8 @@ displayTens' x | x `mod` 10 == 0 = numWords !! (19 + (x `div` 10 - 2))
 displayHundreds' :: Int -> String
 displayHundreds' x | x >= 100 = displayOnes (x `div` 100) ++ "hundred" ++
                      displayHundreds' (x `mod` 100)
-                   | x < 100 && x/= 0 = "and" ++ displayTens' x
+                   | x < 100 && x >= 20 = "and" ++ displayTens' x
+                   | x < 20 && x /= 0 = "and" ++ displayOnes x
                    | otherwise = []
 
 p17 :: Int
