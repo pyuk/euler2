@@ -10,6 +10,7 @@ import P20
 import P21
 import P22
 import P23
+import P24
 
 listAnswers :: Integer -> String
 listAnswers x
@@ -24,4 +25,5 @@ listAnswers x
   | x == 21 = show $ p21
   | x == 22 = show $ p22
   | x == 23 = show $ p23
+  | x == 24 = show $ p24
   | otherwise = "not available"
