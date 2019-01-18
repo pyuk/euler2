@@ -3,8 +3,12 @@ module P24 (
 
 import Data.List
 
-list = [1..9]
-aList = [[a,b,c,d,e,f,g,h,i] | a <- list, b <- list, c <- list, d <- list,
-         e <- list, f <- list, g <- list, h <- list, i <- list] 
+listToNum :: [Int] -> Int
+listToNum [] = 0
+listToNum (x:xs) = (x*10^(length xs)) + listToNum xs
 
-p24 = sort aList !! 1000000
+perms :: [[Int]]
+perms = sort $ permutations [0..9]
+
+p24 :: Int
+p24 = listToNum $ sort perms !! 999999
