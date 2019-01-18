@@ -1,26 +1,10 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "default" }:
-
+{ nixpkgs ? import <nixpkgs> {} }:
 let
-
   inherit (nixpkgs) pkgs;
-
-  f = { mkDerivation, base, primes, stdenv }:
-      mkDerivation {
-        pname = "euler2";
-        version = "0.1.0.0";
-        src = ./.;
-        isLibrary = false;
-        isExecutable = true;
-        executableHaskellDepends = [ base primes ];
-        license = stdenv.lib.licenses.bsd3;
-      };
-
-  haskellPackages = if compiler == "default"
-                       then pkgs.haskellPackages
-                       else pkgs.haskell.packages.${compiler};
-
-  drv = haskellPackages.callPackage f {};
-
+  ghc = pkgs.haskellPackages.ghcWithHoogle (ps: with ps; [primes]);
 in
-
-  if pkgs.lib.inNixShell then drv.env else drv
+pkgs.stdenv.mkDerivation {
+  name = "my-haskell-env-0";
+  buildInputs = [ ghc ];
+  shellHook = "eval $(egrep ^export ${ghc}/bin/ghc)";
+}
