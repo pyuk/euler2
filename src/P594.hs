@@ -34,21 +34,23 @@ searchVertices ((x:x2:xs):xss) i j a b
   | x == i && x2 == j = xs
   | otherwise = searchVertices xss i j a b
 
-matrixElementsM :: [[Int]] -> [Int] -> Int -> Int -> Int
+matrixElementsM :: [[Int]] -> [Int] -> Int -> Int -> Double
 matrixElementsM xs (u:i:j:_) a b = let
-  top = searchVertices xs j u a b !! 0 - searchVertices xs i (u-1) a b !! 0 +
-        searchVertices xs j u a b !! 1 - searchVertices xs i (u-1) a b !! 1
-  bottom = searchVertices xs j u a b !! 0 - searchVertices xs i (u-1) a b !! 0
-           + j - i
-  in (+) top bottom
+  searching x y n = searchVertices xs x y a b !! n
+  top' = searching j u 0 - searching i (u-1) 0 +
+         searching j u 1 - searching i (u-1) 1
+  bottom' = searching j u 0 - searching i (u-1) 0 + j - i
+  in combinationFormula (fromIntegral top') (fromIntegral bottom')
+matrixElementsM _ _ _ _ = 0
 
-matrixElementsP :: [[Int]] -> [Int] -> Int -> Int -> Int
+matrixElementsP :: [[Int]] -> [Int] -> Int -> Int -> Double
 matrixElementsP xs (v:i:j:_) a b = let
-  top = searchVertices xs v j a b !! 0 - searchVertices xs (v-1) i a b !! 0 +
-        searchVertices xs v j a b !! 1 - searchVertices xs (v-1) i a b !! 1
-  bottom = searchVertices xs v j a b !! 0 - searchVertices xs (v-1) i a b !! 0
-           + j - i
-  in (+) top bottom
+  searching x y n = searchVertices xs x y a b !! n
+  top' = searching v j 0 - searching (v-1) i 0 +
+         searching v j 1 - searching (v-1) i 0
+  bottom' = searching v j 0 - searching (v-1) i 0 + j - i
+  in combinationFormula (fromIntegral top') (fromIntegral bottom')
+matrixElementsP _ _ _ _ = 0
 
 matrixBuilderP :: [[Int]] -> [[Int]] -> Int -> Int -> [Int]
 matrixBuilderP _ [] _ _ = []
