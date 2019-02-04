@@ -7,7 +7,7 @@ choose _ [] = []
 choose n (x:xs) = map (x:) (choose (n-1) xs) ++ choose n xs
 
 vertices :: Int -> Int -> [[(Int,Int)]]
-vertices a b = choose (b*b) $ (,) <$> [0..a] <*> [0..b]
+vertices a b = choose (b*b) $ (,) <$> [0..a] <*> [0..a]
 
 arguments :: Int -> [[Int]]
 arguments b = (:) <$> [1..b+1] <*> (sequence . replicate 2 $ [1..b])
