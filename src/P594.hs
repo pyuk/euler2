@@ -62,8 +62,8 @@ matrixBuilderM v (x:args) a b = matrixElementsM v x a b :
 
 matrixFormater :: Int -> [Int] -> [[[Int]]]
 matrixFormater _ [] = []
-matrixFormater b xs = formatAgain (take (b*b) xs) b :
-                      matrixFormater b (drop (b*b) xs)
+matrixFormater b xs =
+  formatAgain (take (b*b) xs) b : matrixFormater b (drop (b*b) xs)
   where formatAgain [] _ = []
         formatAgain ys b' = take b' ys : formatAgain (drop b' ys) b'
                                   
@@ -74,12 +74,12 @@ determinant (x:x2:_) = (x !! 0 ) * (x2 !! 1)
 
 runCalc :: Int -> Int -> [[(Int,Int)]] -> [Int]
 runCalc _ _ [] = []
-runCalc a b (x:xs) =
-  (product . map determinant . matrixFormater b . matrixBuilderP
-    (makeSearchable x (arguments b)) (arguments b) a $ b) *
-  (product . map determinant . matrixFormater b . matrixBuilderM
-    (makeSearchable x (arguments b)) (arguments b) a $ b) :
-  runCalc a b xs
+runCalc a b (x:xs) = (findProduct . matrixBuilderP arg1 arg2 a $ b) *
+                     (findProduct . matrixBuilderM arg1 arg2 a $ b) :
+                     runCalc a b xs
+  where findProduct = product . map determinant . matrixFormater b
+        arg1 = makeSearchable x arg2
+        arg2 = arguments b
 
 p594 :: IO ()
 p594 = print $ sum . runCalc 3 2 $ (vertices 3 2)
