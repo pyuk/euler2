@@ -20,7 +20,7 @@ combinationFormula n k
   | n < 0 = 0
   | k < 0 = 0
   | n < k = 0
-  | otherwise = fac n `div` (fac k * fac (n-k))
+  | otherwise = fac n / (fac k * fac (n-k))
   where fac 1 = 1
         fac n' = n' * fac (n'-1)
 
@@ -53,29 +53,29 @@ matrixElementsP xs (v:i:j:_) a b = let
   in combinationFormula (fromIntegral top') (fromIntegral bottom')
 matrixElementsP _ _ _ _ = 0
 
-matrixBuilderP :: [[Int]] -> [[Int]] -> Int -> Int -> [Int]
+matrixBuilderP :: [[Int]] -> [[Int]] -> Int -> Int -> [Double]
 matrixBuilderP _ [] _ _ = []
 matrixBuilderP v (x:args) a b = matrixElementsP v x a b :
                                 matrixBuilderP v args a b 
 
-matrixBuilderM :: [[Int]] -> [[Int]] -> Int -> Int -> [Int]
+matrixBuilderM :: [[Int]] -> [[Int]] -> Int -> Int -> [Double]
 matrixBuilderM _ [] _ _ = []
 matrixBuilderM v (x:args) a b = matrixElementsM v x a b :
                                 matrixBuilderM v args a b 
 
-matrixFormater :: Int -> [Int] -> [[[Int]]]
+matrixFormater :: Int -> [Double] -> [[[Double]]]
 matrixFormater _ [] = []
 matrixFormater b xs =
   formatAgain (take (b*b) xs) b : matrixFormater b (drop (b*b) xs)
   where formatAgain [] _ = []
         formatAgain ys b' = take b' ys : formatAgain (drop b' ys) b'
                                   
-determinant :: [[Int]] -> Int
+determinant :: [[Double]] -> Double
 determinant [] = 0
 determinant [_] = 0
 determinant (x:x2:_) = (x !! 0 ) * (x2 !! 1)
 
-runCalc :: Int -> Int -> [[(Int,Int)]] -> [Int]
+runCalc :: Int -> Int -> [[(Int,Int)]] -> [Double]
 runCalc _ _ [] = []
 runCalc a b (x:xs) = (findProduct . matrixBuilderP arg1 arg2 a $ b) *
                      (findProduct . matrixBuilderM arg1 arg2 a $ b) :
