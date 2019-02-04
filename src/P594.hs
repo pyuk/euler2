@@ -15,7 +15,7 @@ arguments b = (:) <$> [1..b+1] <*> (sequence . replicate 2 $ [1..b])
 makeSearchable :: [(Int,Int)] -> [[Int]] -> [[Int]]
 makeSearchable xs ys = zipWith (\(a,b) (_:i:j:_) -> [i,j,a,b]) xs ys
 
-combinationFormula :: Int -> Int -> Int
+combinationFormula :: Double -> Double -> Double
 combinationFormula n k
   | n < 0 = 0
   | k < 0 = 0
