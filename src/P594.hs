@@ -21,8 +21,7 @@ combinationFormula n k
   | k < 0 = 0
   | n < k = 0
   | otherwise = fac n / (fac k * fac (n-k))
-  where fac 1 = 1
-        fac n' = n' * fac (n'-1)
+  where fac n' = product [2..n']
 
 searchVertices :: [[Int]] ->  Int -> Int -> Int -> Int -> [Int]
 searchVertices [] _ _ _ _= []
