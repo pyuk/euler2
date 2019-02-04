@@ -33,6 +33,7 @@ searchVertices ((x:x2:xs):xss) i j a b
   | i == b + 1 = [a,0]
   | x == i && x2 == j = xs
   | otherwise = searchVertices xss i j a b
+searchVertices _ _ _ _ _ = []
 
 matrixElementsM :: [[Int]] -> [Int] -> Int -> Int -> Double
 matrixElementsM xs (u:i:j:_) a b = let
